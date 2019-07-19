@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
+import data from './swapiData'
+import CharGrid from './components/CharGrid/CharGrid'
 import './App.css';
 
 const App = () => {
 
-  const [ char, setChar ] = useState(null)
+  const [ char, setChar ] = useState([])
+
 
   useEffect(() => {
+    // console.log(data.results)
+    // setChar(data.results)
+
     axios
       .get('https://swapi.co/api/people/')
       .then((res) => {
-        setChar(res)
-        console.log(res)
+        setChar(res.data)
+        // console.log(res.data.results)
       })
       .catch((error) => {
         console.log('something went wrong!', error)
@@ -26,6 +32,7 @@ const App = () => {
   return (
     <div className="App">
       <h1 className="Header">React Wars</h1>
+      <CharGrid charData={char} />
     </div>
   );
 }
