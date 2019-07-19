@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
-import data from './swapiData'
+// import data from './swapiData'
 import CharGrid from './components/CharGrid/CharGrid'
 import './App.css';
 
@@ -8,16 +8,14 @@ const App = () => {
 
   const [ char, setChar ] = useState([])
 
-
   useEffect(() => {
-    // console.log(data.results)
+    // use if api isn't working
     // setChar(data.results)
 
     axios
       .get('https://swapi.co/api/people/')
       .then((res) => {
         setChar(res.data)
-        // console.log(res.data.results)
       })
       .catch((error) => {
         console.log('something went wrong!', error)
