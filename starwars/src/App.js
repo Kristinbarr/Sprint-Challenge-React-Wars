@@ -1,28 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-// import data from './swapiData'
 import { Button } from 'semantic-ui-react'
 import CharGrid from './components/CharGrid/CharGrid'
 import './App.css'
 
 const App = () => {
   const [char, setChar] = useState([])
-  const [next, setNext] = useState(null)
   const [previous, setPrevious] = useState(null)
-  const nextDisabled = next ? '' : 'disabled'
-  const prevDisabled = next ? '' : 'disabled'
+  const [next, setNext] = useState(null)
+  const disabled = 'disabled'
 
   useEffect(() => {
-    // use if api isn't working
-    // setChar(data.results)
-
     axios
-      .get('https://swapi.co/api/people/')
+      .get('https://swapi.co/api/people/?format=json')
       .then((res) => {
         setChar(res.data)
         setNext(res.data.next)
         setPrevious(res.data.previous)
-        // console.log('res.data',res.data, Array.isArray(res.data.results))
       })
       .catch((error) => {
         console.log('something went wrong!', error)
@@ -37,21 +31,21 @@ const App = () => {
   return (
     <div className='App'>
       <h1 className='Header'>React Wars</h1>
-      <CharGrid charData={char} />
+      <CharGrid char={char} />
       <div className='buttons'>
         <Button
-          className={prevDisabled}
-          className='button'
+          disabled={previous ? '' : disabled}
           content='Previous Page'
           icon='left arrow'
           labelPosition='left'
+          action={previous}
         />
         <Button
-          className={nextDisabled}
-          className='button'
+          disabled={next ? '' : disabled}
           content='Next Page'
           icon='right arrow'
           labelPosition='right'
+          action={next}
         />
       </div>
     </div>
