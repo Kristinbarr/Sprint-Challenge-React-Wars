@@ -5,24 +5,64 @@ import CharGrid from './components/CharGrid/CharGrid'
 import './App.css'
 
 const App = () => {
-  const [char, setChar] = useState([])
-  const [previous, setPrevious] = useState(null)
-  const [next, setNext] = useState(null)
-  const disabled = 'disabled'
+  const [state, setState] = useState({
+    chars: {},
+    prev: null,
+    next: null,
+    page: '',
+    render: false,
+    disabled: true
+  })
+  // const [chars, setChars] = useState({})
+  // const [prev, setPrev] = useState('test')
+  // const [next, setNext] = useState(null)
+  // const [page, setPage] = useState('https://swapi.co/api/people/?format=json')
+  // const [render, setRender] = useState(false)
+  // const disabled = 'disabled'
+  // console.log('page before', state.page)
 
   useEffect(() => {
+    getChars(state.page === '' ? 'https://swapi.co/api/people/' : state.page)
+  }, [state.render])
+
+  const getChars = (page) => {
     axios
-      .get('https://swapi.co/api/people/?format=json')
+      .get(page)
       .then((res) => {
-        setChar(res.data)
-        setNext(res.data.next)
-        setPrevious(res.data.previous)
+        setState({
+          ...state,
+          chars: res.data,
+          next: res.data.next,
+          prev: res.data.previous,
+          render: false
+        })
+        // setChars(res.data)
+        // setNext(res.data.next)
+        // setPrev(res.data.previous)
+        // setRender(false)
+        // console.log('res',res)
+        // console.log('next',next)
+        // console.log('res.data',res.data.next)
       })
       .catch((error) => {
         console.log('something went wrong!', error)
-      })
-  }, [])
+  })}
 
+  // console.log('page after', page)
+  const nextPage = (e) => {
+    e.preventDefault()
+    setState({
+      ...state,
+      page: state.next,
+      render: true
+    })
+    // console.log('clicked next', state.page)
+    getChars(state.page)
+    // getChars(state.page)
+    // setPage(next)
+    // setRender(true)
+    // getChars(page)
+  }
   // Try to think through what state you'll need for this app before starting. Then build out the state properties here.
   // name, birth year, species, homeworld, maybe films, maybe pull picture from wiki with name
 
@@ -31,21 +71,21 @@ const App = () => {
   return (
     <div className='App'>
       <h1 className='Header'>React Wars</h1>
-      <CharGrid char={char} />
+      <CharGrid chars={state.chars} />
       <div className='buttons'>
         <Button
-          disabled={previous ? '' : disabled}
+          disabled={state.prev ? false : true}
           content='Previous Page'
           icon='left arrow'
           labelPosition='left'
-          action={previous}
+          // onClick={prevPage}
         />
         <Button
-          disabled={next ? '' : disabled}
+          disabled={state.next ? false : true}
           content='Next Page'
           icon='right arrow'
           labelPosition='right'
-          action={next}
+          onClick={nextPage}
         />
       </div>
     </div>

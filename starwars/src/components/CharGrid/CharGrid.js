@@ -3,7 +3,7 @@ import Card from '../Card/Card'
 import data from '../../swapiData'
 import './CharGrid.css'
 
-const CharGrid = () => {
+const CharGrid = (props) => {
   const charArr = data.results
 
   return (

@@ -9,6 +9,6 @@
 .buttons {
   display: flex;
   justify-content: space-evenly;
-  padding: 2rem;
+  padding: 0 2rem 4rem 2rem;
 }
 /* write your parent styles in here for your App.js */
