@@ -1,29 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Header, Segment } from 'semantic-ui-react'
-import axios from 'axios'
+import { charSpecies, photos } from '../../attrData'
 import './Card.css'
 
+const parseUrl = (url) => url.split('/')[5]
+
 const Card = (props) => {
-  const [species, setSpecies] = useState([])
-  // const [homeWorld, setHomeWorld] = useState('')
+  const photo = photos[props.char.name]
+  const speciesId = parseUrl(props.char.species[0])
 
-  useEffect(()=> {
-    axios.get(props.char.species)
-    .then((res)=> {
-      setSpecies(res.data.name)
-    })
-    .catch((error) => {
-      console.log('Something went fetching species!', error)
-    })
-  },[])
-
-  const { name, birth_year  } = props.char
+  const { name, birth_year, films } = props.char
 
   return (
     <div className='card'>
       <Segment.Group>
         <Segment raised>
           <Header>{name}</Header>
+          <img src={photo} alt='character' />
         </Segment>
         <Segment.Group horizontal>
           <Segment>Birth Year</Segment>
@@ -31,11 +24,11 @@ const Card = (props) => {
         </Segment.Group>
         <Segment.Group horizontal>
           <Segment>Species</Segment>
-          <Segment>{species}</Segment>
+          <Segment>{charSpecies[speciesId]}</Segment>
         </Segment.Group>
         <Segment.Group horizontal>
-          <Segment>Homeworld</Segment>
-          <Segment>{}</Segment>
+          <Segment>Films Appered In:</Segment>
+          <Segment>{films.length}</Segment>
         </Segment.Group>
       </Segment.Group>
     </div>
