@@ -2,7 +2,13 @@
   text-align: center;
 }
 .Header {
+  padding-top: 1rem;
   color: #443e3e;
   text-shadow: 1px 1px 5px #fff;
+}
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0 2rem 4rem 2rem;
 }
 /* write your parent styles in here for your App.js */

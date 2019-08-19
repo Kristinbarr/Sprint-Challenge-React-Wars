@@ -1,0 +1,9 @@
+.card {
+  width: 20rem;
+  margin: 1rem;
+  background: rgba(255, 255, 255, .5);
+}
+
+img {
+  max-height: 150px;
+}
