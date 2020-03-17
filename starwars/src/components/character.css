@@ -1,0 +1,22 @@
+.character {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 5rem;
+}
+.button {
+  margin: 2rem;
+}
+.collapse {
+  margin: 5px 5rem 5px auto;
+}
+.card-body {
+  display: flex;
+}
+.card-left {
+  display: flex;
+  flex-direction: column;
+}
+/* .card {
+    width: 30%;
+} */
